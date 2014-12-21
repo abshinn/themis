@@ -3,17 +3,18 @@
 import os
 
 def main():
-    for root, dirs, files in os.walk("themis.ssl.berkeley.edu/"):
-        print root
-        print files
-        if len(files) > 0:
-            if files[0] == "file_splitter_cmpstats.log":
-                path = "/".join([root, files[0]])
-                if os.path.getsize( path ) > 0:
-                    name = root.split("/")[-1].split(".")[-1]
-                    print "name: %s_cmpstats.log" % (name,)
-                    os.system( "mkdir -p ~/themis/logs" )
-                    os.system( "cp %s ~/themis/logs/%s_cmpstats.log" % (path, name) )
+    if os.path.isdir("themis.ssl.berkeley.edu/"):
+        for root, dirs, files in os.walk("themis.ssl.berkeley.edu/"):
+            if len(files) > 0:
+                if files[0] == "file_splitter_cmpstats.log":
+                    path = "/".join([root, files[0]])
+                    if os.path.getsize( path ) > 0:
+                        name = root.split("/")[-1].split(".")[-1]
+                        os.system( "mkdir -p ~/themis/logs" )
+                        os.system( "cp %s ~/themis/logs/%s_cmpstats.log" % (path, name) )
+                        print "created: ~/themis/logs/%s_cmpstats.log" % (name,)
+    else:
+        raise Exception("themis.ssl.berkeley.edu/ directory not found")
 
 if __name__ == "__main__":
     main()
