@@ -2,3 +2,5 @@ logs/
 themis.ssl.berkeley.edu/
 *.py[co]
 *.sw[po]
+*.gz
+*.tar
